@@ -37,7 +37,7 @@ function game(UserChoice){
 }
 function win(bn){
     UserPoints++;
-    document.getElementById("who").innerHTML = "You win!";
+    document.getElementById("who").innerHTML = "Bjir Menang!";
     var bn = document.getElementById(bn);
     bn.classList.remove("bn");
     bn.classList.add("green");
@@ -47,7 +47,7 @@ function win(bn){
     }, 1200);
 }
 function draw(bn){
-    document.getElementById("who").innerHTML = "It's a Draw.";
+    document.getElementById("who").innerHTML = "Seri Coy.";
     var bn = document.getElementById(bn);
     bn.classList.remove("bn");
     bn.classList.add("gray");
@@ -58,7 +58,7 @@ function draw(bn){
 }
 function lose(bn){
     ComPoints++;
-    document.getElementById("who").innerHTML = "You lose...";
+    document.getElementById("who").innerHTML = "Awoakowkwo Kalah Sama Bot...";
     var bn = document.getElementById(bn);
     bn.classList.remove("bn");
     bn.classList.add("red");
