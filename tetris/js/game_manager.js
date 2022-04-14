@@ -4,6 +4,9 @@ function GameManager(){
     var scoreContainer = document.getElementById("score-container");
     var resetButton = document.getElementById('reset-button');
     var aiButton = document.getElementById('ai-button');
+    var kiriButton = document.getElementById('kekiri');
+    var kananButton = document.getElementById('kekanan');
+    var turunButton = document.getElementById('turun');
     var gridContext = gridCanvas.getContext('2d');
     var nextContext = nextCanvas.getContext('2d');
     document.addEventListener('keydown', onKeyDown);
@@ -133,7 +136,7 @@ function GameManager(){
             startWorkingPieceDropAnimation(function(){
                 while(workingPiece.moveDown(grid)); // Drop working piece
                 if(!endTurn()){
-                    alert('Game Over!');
+                    alert('Ga Bisa Main Bilang Bos! Gini Aja Kalah :v');
                     return;
                 }
                 startTurn();
@@ -175,7 +178,7 @@ function GameManager(){
         // and game cannot continue because grid has been exceeded
         if(!endTurn()){
             isKeyEnabled = false;
-            alert('Game Over!');
+            alert('Ga Bisa Main Bilang Bos! Gini Aja Kalah :v');
             return;
         }
 
@@ -196,7 +199,7 @@ function GameManager(){
                 startWorkingPieceDropAnimation(function(){ // Start drop animation
                     while(workingPiece.moveDown(grid)); // Drop working piece
                     if(!endTurn()){
-                        alert('Game Over!');
+                        alert('Ga Bisa Main Bilang Bos! Gini Aja Kalah :v');
                         return;
                     }
                     startTurn();
@@ -223,7 +226,10 @@ function GameManager(){
                 break;
         }
     }
-
+turunButton.onclick = function(){
+                workingPiece.rotate(grid);
+                redrawGridCanvas();
+}
     aiButton.onclick = function(){
         if (isAiActive){
             isAiActive = false;
@@ -237,13 +243,28 @@ function GameManager(){
             startWorkingPieceDropAnimation(function(){ // Start drop animation
                 while(workingPiece.moveDown(grid)); // Drop working piece
                 if(!endTurn()){
-                    alert('Game Over!');
+                    alert('Ga Bisa Main Bilang Bos! Gini Aja Kalah :v');
                     return;
                 }
                 startTurn();
             });
         }
     }
+
+kananButton.onclick = function(){
+    if(workingPiece.canMoveRight(grid)){
+                    workingPiece.moveRight(grid);
+                    redrawGridCanvas();
+                }
+}
+
+kiriButton.onclick = function(){
+    if(workingPiece.canMoveLeft(grid)){
+                    workingPiece.moveLeft(grid);
+                    redrawGridCanvas();
+                }
+                
+}
 
     resetButton.onclick = function(){
         gravityTimer.stop();
@@ -257,7 +278,6 @@ function GameManager(){
         updateScoreContainer();
         startTurn();
     }
-
     aiButton.style.backgroundColor = "#e9e9ff";
     startTurn();
 }
