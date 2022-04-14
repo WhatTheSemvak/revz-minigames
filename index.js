@@ -557,7 +557,7 @@ function pause(){
 	{
 		setTimeout(pauseMessage,(myArray.length+1)*ballTimerVar);
 	function pauseMessage(){
-swal( "❌Game Over❌","Yah Uler Mu Meninggal!\nYour score: " + eatVar + "\n\nMau Main Lagi?");
+swal( "❌Game Over❌","Yah Uler Mu Meninggal!\nSkor: " + eatVar + "\n\nMau Main Lagi?");
 scoreId.innerHTML = "◀️ Press to restart ▶️";
 
 	leftArrow.style.opacity = "1";
