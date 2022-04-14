@@ -1,178 +1,28 @@
-<html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" type="text/css" href="style.css">
-  <style>
-  .button {
-    background-color: #d52518; 
-    color: white;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-  
-  .button1 {border-radius: 2px;}
-  .button2 {border-radius: 4px;}
-  .button3 {border-radius: 8px;}
-  .button4 {border-radius: 12px;}
-  .button5 {border-radius: 50%;}
-  
-</style>
-    </head>
- 
-    <body>
-    <body>
-        <canvas id="ruang" width="450" height="450"></canvas>
-        
- 
-       <script type="text/javascript">
-            $(document).ready(function() {
-			
-		
-              // deklarasi
-             
-              var ruang = $("#ruang")[0];
-              var ctx = ruang.getContext("2d");
-              var lebar = $("#ruang").width();
-              var tinggi = $("#ruang").height();
-              var cw = 15;
-              var tekan ;
-              var makanan;
-              var nilai;
- 
-              //membuat cell aray untuk membuat ular
-              var array_ular; 
- 
-              function init() {
-                tekan = "down"; //default direction
-                create_snake();
-                create_makanan(); //membuat makanan untuk ular
-                //nilai game
-                nilai = 0;
- 
-                if (typeof game_loop != "undefined") clearInterval(game_loop);
-                game_loop = setInterval(paint, 200);
-            }
- 
-            init();
- 
-              // membuat ular
-              function create_snake() {
-                // menetapkan jumlah panjang awal ular
-                var length = 4; //panjang ular default
-                array_ular = [];
-                for (var i = length - 1; i >= 0; i--) {
-                  //membuat ular horizontal mulai dari arah kiri
-                  array_ular.push({ x: i, y: 0 });
-              }
-            }
- 
-              //membuat makanan untuk ular
-              function create_makanan() {
-                makanan = {
-                  x: Math.round(Math.random() * (lebar - cw) / cw),
-                  y: Math.round(Math.random() * (tinggi - cw) / cw)
-              };
-            }
- 
-              //pengaturan
-              function paint() {
-                // warna background
-                ctx.fillStyle = "#ecf0f1";
-                ctx.fillRect(0, 0, lebar, tinggi);    
-                ctx.strokeStyle = "#27a30f";
-                ctx.strokeRect(0, 0, lebar, tinggi);
- 
-                //membuat pergerakan untuk ular
-                var nx = array_ular[0].x;
-                var ny = array_ular[0].y;
-                if (tekan == "right") nx++;
-                else if (tekan == "left") nx--;
-                else if (tekan == "up") ny--;
-                else if (tekan == "down") ny++;
- 
-                //memeriksa tabrakan
-                if (
-                  nx == -1 ||
-                  nx == lebar / cw ||
-                  ny == -1 ||
-                  ny == tinggi / cw ||
-                  cek_tabrakan(nx, ny, array_ular)
-                  ){
- 
-                //restart game
-            init();
-            return;
-            }
- 
-                //cek jika ular kena makanan/memakan makanan
-                if(nx == makanan.x && ny == makanan.y){
- 
-                  var ekor = { x: nx, y: ny };
-                  nilai++;
-                  
-                  //membuat makanan yang baru
-                  create_makanan();
-                  
-              } else {
-                  var ekor = array_ular.pop();
-                  ekor.x = nx;
-                  ekor.y = ny;
-              }
- 
-              array_ular.unshift(ekor);
- 
-              for (var i = 0; i < array_ular.length; i++) {
-                  var c = array_ular[i];
-                  paint_cell(c.x, c.y);
-              }
- 
-              paint_cell(makanan.x, makanan.y);    
- 
-                //membuat penilaian skor
-                var nilai_text = "NILAI: " + nilai;
-                ctx.fillText(nilai_text, 5, tinggi - 5);
-            }
- 
-            function paint_cell(x, y) {
-                ctx.fillStyle = "#1abc9c";
-                ctx.fillRect(x * cw, y * cw, cw, cw);
-                ctx.strokeStyle = "#ecf0f1";
-                ctx.strokeRect(x * cw, y * cw, cw, cw);
-            }
- 
-            function cek_tabrakan(x, y, array) {
-                for (var i = 0; i < array.length; i++) {
-                  if (array[i].x == x && array[i].y == y) return true;
-              }
-              return false;
-            }
- 
-              //kontrol ular dengan keyboard
-              $(document).keydown(function(e) {
-                var key = e.which;
-                if (key == "37" && tekan != "right") tekan = "left";
-                else if (key == "38" && tekan != "down") tekan = "up";
-                else if (key == "39" && tekan != "left") tekan = "right";
-                else if (key == "40" && tekan != "up") tekan = "down";
-            });
-            });
-         
-            </script>
-</body>
-        
-<body>
-  <div class="button1">
-    <a href="/revz-minigames/">
-    <h1><button class="button button1" >MENU UTAMA</button></h1></a> </div></h1>
+<html><head>
+    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>3D snake game</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.js"></script>
+    <script src="https://dl.dropbox.com/s/nn9wz6aimz6vzoi/OBJLoader.js"></script>
+    <script src="https://dl.dropbox.com/s/2821pj5wkc2b8pe/MTLLoader.js"></script>
+    <script src="https://dl.dropbox.com/s/qxgrvxduynnst3u/OrbitControls.js"></script>
+    <link rel="stylesheet" href="index.css">
+    </head><body style="margin: 0px;"><audio id="niceSong" src="https://dl.dropbox.com/s/47yhesl39v8w3at/niceSong.mp3"></audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+
+
+
+    
+    <div id="arrowCont">
+        <img class="arrows" id="left" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAb1BMVEX///8AAADY2Nj7+/s6Ojrp6enU1NQxMTHw8PB7e3uRkZH19fXt7e0TExMkJCTf398ODg4dHR3j4+MaGhoVFRVGRkZLS0uBgYGcnJzBwcF0dHRnZ2crKytvb2+zs7O5ublaWlqoqKjMzMyJiYmXl5c/FcUgAAACuklEQVR4nO3cDXLaMBCGYdaJqRtInJKQBEp+aHv/M9YwTQZstBNayVut3ucE+kZar2SDJhMAAAAAAAAAAAAAAAAAAAAAAAAAAADE06xeXlvrQST0+iB7j3PrkaTRvMmHF+vBpNBcy4En6+HEV9/KkZX1gGKrb6TnwnpIcc2/9QPK1npMUc2vBwHlwXpQMdV3w4By11gPK55hDe4trMcVTXN/MqCs2oWPaTxVgzv3P6rOzHp4/y6wREWW7S7hNPsN3DwUUK72Casq85Xa3IYCyrT6I+vWXwdqsLNt3xPm/EwN1mB3gPoIWFXWw/x7zXCr9u7rQcB8n6ehNtEPWOX6OK2VGVxUDhIqNXg8g7n2i+azS7Rr+lnWoVaDx0s002eptkQHAXMsw/BWbbBE85zCM2owz2548kQfWqJZBjxriWYYsFFm0EXAs9pEjgE/v1XLNOB5bSLDgLPwid5HwP7HF3dL1H2bOPHxxVdAbavmY4mGG/26nfY1F1GMGjBcg3L5ZeAyjuX3p3qkgMoSTe1xlIDzcJtI72aEE/RsYxhQZJP+TdazaUCR59QBK+OAIqlfhKytA8o6cULrfJ20AWfW8Tppt0i1dbxO2r7vfw7912EBz1L//dD/nqaAfant2WIzytc59+dD/Yy/jHSiP3XG3451xldf5/+cxHkrY/ueRl2oV+OOJBnlfamXiEoteomoNA0vEZVvT14iKt8PvUQsoRb9Nw3ltxheIhawUJUPbV4ilrCBK2Ch+o9YQtPwH7GAhaqc+r1ELKEW/c+iUou/rMcWifL/Qy+3Rij/Ic36r6MHwhs4N7dGBGvRz60Roabh6NaI0J0KOf/Ducf9vRgF3G1SwP00BdwxVMA9UQXc9dVvGg7vayvgzr2J/3sTd2bO774EAAAAAAAAAAAAAAAAAAAAAAAAAAD4X/0GG3cp7TDZx1kAAAAASUVORK5CYII=" alt="arrow" draggable="false" oncontextmenu="return false;" size="10">
+        <img class="arrows" id="right" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAZlBMVEX///8AAADY2Ng6Ojr7+/vU1NQxMTHo6Ojr6+t9fX0ODg719fWUlJTx8fEhISHf398VFRXd3d0bGxt2dnZwcHCzs7OdnZ29vb1JSUkRERGMjIykpKTFxcVMTExYWFjLy8tmZmYqKipeIosAAAACfUlEQVR4nO3ci3KbMBCFYVaxCzHFGOfi3No07/+SJZ7aTSzkgRmEZlf/9wSc0S4SGG9RAAAAAAAAAAAAAAAAAAAAAAAAAAAAYGnd4eGtTn0R8VS3cvTrkPpKInmQs99N6ouJ4VG+2BmMeJBvNlXqC5rbSi5sy9SXNLPXy4SyN7aKT15CeTYVsdn5CWVvqVDbgYCGerFpu7fBhPJsYtOoXe99qEqNbBrV+jNhezOc0EChNu6oewkklK3yVVy5f9ahhLLR3YvlKWHnb/nn243qQnVn7W0wouZerN2oiDu9vdi4cRH1bhqVGxlR7QHu2xqa7MV6PTqi1k3DufERdfZiNSGi0kLtJkTU+dRfXya014uTIu5UFuqkiDp7cdoq2i9UnZvGpIg6D3DTetH+KmawaWwyKFT7ETnAzW41i2Z9qb0LRlzwAFc+/nm6mccPT+hV+JK9GC6k2Jb52abaJgu4zAGu+UgYUOQj/ireJw0och87oEscUMRFThi+ly/lLnLC1Pl6cQPWqeP14n7IWKaO14u77dtfQ/t9mMG91P5+aP9Mk/xcusBH71XKiAu9HLb+fNgrX2d7xvcNfFh7suz7tnne0/iK4OduSn9o8/wMBtT53tsTDqjzfaknHFDnO2/PlRI1H9B6D+r8/dBz5SZjvkStr6DObzE8GW8THNV04KimXcbbhPkeNF+iHNV0uLLRWw9opAcD/3UW7f8/PPOmRvzvQRvbxMDUiFOJ2ujBwakRlnqwKJp9oEStrGBgaoSRmQpHxudiFDnMNrE/nyaDGUP250TZn/WVwby2DGbuZTA38ZPx2ZcAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ/AUlAClG+uZTPgAAAABJRU5ErkJggg==" alt="arrow" draggable="false" oncontextmenu="return false;">
     </div>
-</body>
- 
-        </body>
-</html>
+
+    <div id="scoreId">Score: 0</div>
+<script src="index.js"></script>
+
+</body></html>
