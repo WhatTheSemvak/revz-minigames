@@ -649,7 +649,7 @@ ballTimerVar = (320/10)*6;
 }
 }
 
-swal("🐍 Game Uler 3D🐍", "Cara Main:\n🍎Gunakan Tanda Panah Untuk Menggerakan Ular!🍎\nNB: POV Dan Posisi Bisa Diatur Sendiri Kok" );
+swal("🐍 Game Uler 3D🐍", "Cara Main:\n🍎Gunakan Tanda Panah Untuk Menggerakan Ular!🍎\nNB: POV Dan Posisi Bisa Diatur Sendiri Kok\nMake Off By : VanzID" );
 pauseVar=1;
 scoreId.innerHTML = "◀️\nPencet Tanda Panah Untuk Memulai\n▶️";
 
